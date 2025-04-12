@@ -1,49 +1,46 @@
 pipeline {
     agent any
 
-    environment {
-        PYTHON = 'python'
-    }
-
     stages {
+        stage('Checkout SCM') {
+            steps {
+                checkout scm
+            }
+        }
         stage('Build') {
             steps {
-                echo 'Building the app...'
-                sh "${env.PYTHON} -m py_compile app.py"
+                bat 'echo Building the app...'
+                // Replace with your actual build commands for Windows
             }
         }
-
         stage('Test') {
             steps {
-                echo 'Running tests...'
-                sh "pytest tests/"
+                bat 'echo Running tests...'
+                // Replace with your actual test commands for Windows
             }
         }
-
         stage('Deploy to Staging') {
             steps {
-                echo 'Deploying to staging...'
-                // Simulate deploy
+                bat 'echo Deploying to Staging...'
+                // Replace with your actual deployment commands for Windows
             }
         }
-
         stage('Manual Approval') {
             steps {
-                input message: 'Approve deploy to production?', ok: 'Deploy'
+                input 'Approve deployment to Production?'
             }
         }
-
         stage('Deploy to Production') {
             steps {
-                echo 'Deploying to production...'
-                // Simulate deploy
+                bat 'echo Deploying to Production...'
+                // Replace with your actual deployment commands for Windows
             }
         }
     }
 
     post {
-        failure {
-            echo 'Pipeline failed! Check logs and notify team.'
+        always {
+            echo 'Pipeline finished!'
         }
     }
 }
